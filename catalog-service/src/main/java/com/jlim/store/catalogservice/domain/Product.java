@@ -7,11 +7,4 @@ import java.math.BigDecimal;
  * Public exposed: PagedResult, Product(ProductEntity without id), ProductService
  * Internal Private ProductEntity, ProductRepository, ProductMapper (No one calls except Spring Boot)
  * */
-public record Product(
-        String code,
-        String name,
-        String description,
-        String imageUrl,
-        BigDecimal price
-) {
-}
+public record Product(String code, String name, String description, String imageUrl, BigDecimal price) {}

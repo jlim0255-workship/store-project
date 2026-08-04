@@ -1,14 +1,12 @@
 package com.jlim.store.catalogservice.web.exception;
 
+import com.jlim.store.catalogservice.domain.ProductNotFoundException;
 import java.net.URI;
 import java.time.Instant;
-
-import com.jlim.store.catalogservice.domain.ProductNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ProblemDetail;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
-import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
 @RestControllerAdvice
 public class GlobalExceptionHandler {

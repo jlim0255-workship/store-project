@@ -8,7 +8,8 @@ import org.springframework.context.annotation.Import;
 
 @Import(TestcontainersConfiguration.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-// MEAT: the SpringBootTest.WebEnvironment.RANDOM_PORT will start the application on a random port, (test the whole flow)
+// MEAT: the SpringBootTest.WebEnvironment.RANDOM_PORT will start the application on a random port, (test the whole
+// flow)
 // and the @LocalServerPort annotation will inject that port into the test class.
 // This allows us to test the application in a real environment without hardcoding the port number.
 public abstract class AbstractIT {
@@ -16,7 +17,7 @@ public abstract class AbstractIT {
     int port;
 
     @BeforeEach
-    void setUp(){
+    void setUp() {
         RestAssured.port = port;
     }
 }
