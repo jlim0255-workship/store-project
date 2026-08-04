@@ -28,6 +28,7 @@
     </scm>
     <properties>
         <java.version>21</java.version>
+        <dockerImageName>jlim0255.work/store-project-${project.artifactId}</dockerImageName>
     </properties>
     <dependencies>
         <dependency>
@@ -135,7 +136,7 @@
                         <importOrder />
                         <removeUnusedImports />
                         <palantirJavaFormat>
-                            <version>2.35.0</version>
+                            <version>2.50.0</version>
                         </palantirJavaFormat>
                         <formatAnnotations />
                     </java>
@@ -144,6 +145,11 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
+                <configuration>
+                    <image>
+                        <name>${dockerImageName}</name>
+                    </image>
+                </configuration>
                 <executions>
                     <execution>
                         <goals>
