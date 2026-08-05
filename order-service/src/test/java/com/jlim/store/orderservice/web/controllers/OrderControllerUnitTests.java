@@ -1,0 +1,76 @@
+package com.jlim.store.orderservice.web.controllers;
+
+import static com.jlim.store.orderservice.testdata.TestDataFactory.*;
+import static org.junit.jupiter.api.Named.named;
+import static org.junit.jupiter.params.provider.Arguments.arguments;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.BDDMockito.given;
+//import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
+
+import java.util.stream.Stream;
+
+import com.jlim.store.orderservice.domain.OrderService;
+import com.jlim.store.orderservice.domain.SecurityService;
+import com.jlim.store.orderservice.domain.models.CreateOrderRequest;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.webmvc.test.autoconfigure.WebMvcTest;
+import org.springframework.http.MediaType;
+//import org.springframework.security.test.context.support.WithMockUser;
+import org.springframework.test.context.bean.override.mockito.MockitoBean;
+import org.springframework.test.web.servlet.MockMvc;
+import tools.jackson.databind.json.JsonMapper;
+
+@WebMvcTest(OrderController.class)
+class OrderControllerUnitTests {
+    @MockitoBean
+    private OrderService orderService;
+
+    @MockitoBean
+    private SecurityService securityService;
+
+    @Autowired
+    private MockMvc mockMvc;
+
+    @Autowired
+    private JsonMapper objectMapper;
+
+    @BeforeEach
+    void setUp() {
+        given(securityService.getLoginUserName()).willReturn("siva");
+    }
+
+
+    /**
+     * TODO: understand the chunk below
+     * */
+    @ParameterizedTest(name = "[{index}]-{0}")
+    @MethodSource("createOrderRequestProvider")
+//    @WithMockUser
+    void shouldReturnBadRequestWhenOrderPayloadIsInvalid(CreateOrderRequest request) throws Exception {
+        System.out.println("request = " + request);
+        given(orderService.createOrder(eq("siva"), any(CreateOrderRequest.class)))
+                .willReturn(null);
+
+        mockMvc.perform(post("/api/orders")
+//                        .with(csrf())
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(request))) // intentionally sending invalid payload
+                .andExpect(status().isBadRequest());
+    }
+
+    static Stream<Arguments> createOrderRequestProvider() {
+        // call different method from test factory
+        return Stream.of(
+                arguments(named("Order with Invalid Customer", createOrderRequestWithInvalidCustomer())),
+                arguments(named("Order with Invalid Delivery Address", createOrderRequestWithInvalidDeliveryAddress())),
+                arguments(named("Order with No Items", createOrderRequestWithNoItems())));
+    }
+}
