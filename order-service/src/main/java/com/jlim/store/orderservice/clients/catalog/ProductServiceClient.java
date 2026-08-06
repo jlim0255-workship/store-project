@@ -1,5 +1,6 @@
 package com.jlim.store.orderservice.clients.catalog;
 
+import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
 import io.github.resilience4j.retry.annotation.Retry;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,6 +19,13 @@ public class ProductServiceClient {
         this.restClient = restClient;
     }
 
+    // MEAT:
+    // DO NOT APPLY fallback inside circuit breaker
+    // the priority is below
+    // Retry ( CircuitBreaker ( RateLimiter ( TimeLimiter ( Bulkhead ( Function ) ) ) ) ) -> this is default but can be modified
+    // source: https://resilience4j.readme.io/docs/getting-started-3#aspect-order
+    // if we apply fallback inside circuitbreaker, it will return the fallback, then no more retry, which is not we want
+    @CircuitBreaker(name = "catalog-service")
     @Retry(name="catalog-service", fallbackMethod = "getProductByCodeFallback")
     public Optional<Product> getProductByCode(String code){
         // MEAT
