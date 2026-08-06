@@ -16,16 +16,18 @@ public class OrderService {
     private static final List<String> DELIVERY_ALLOWED_COUNTRIES = List.of("INDIA", "USA", "GERMANY", "UK");
 
     private final OrderRepository orderRepository;
+    private final OrderValidator orderValidator;
 
     private final OrderEventService orderEventService;
 
-    OrderService(OrderRepository orderRepository, OrderEventService orderEventService) {
+    OrderService(OrderRepository orderRepository, OrderValidator orderValidator, OrderEventService orderEventService) {
         this.orderRepository = orderRepository;
+        this.orderValidator = orderValidator;
         this.orderEventService = orderEventService;
     }
 
     public CreateOrderResponse createOrder(String userName, CreateOrderRequest request) {
-//        orderValidator.validate(request);
+        orderValidator.validate(request);
         OrderEntity newOrder = OrderMapper.convertToEntity(request);
         newOrder.setUserName(userName);
         OrderEntity savedOrder = this.orderRepository.save(newOrder);
