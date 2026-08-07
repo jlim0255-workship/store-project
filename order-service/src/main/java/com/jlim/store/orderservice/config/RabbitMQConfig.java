@@ -7,8 +7,10 @@ import org.springframework.amqp.core.DirectExchange;
 import org.springframework.amqp.core.Queue;
 import org.springframework.amqp.core.QueueBuilder;
 import org.springframework.amqp.rabbit.connection.ConnectionFactory;
+import org.springframework.amqp.rabbit.core.RabbitAdmin;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.amqp.support.converter.JacksonJsonMessageConverter;
+import org.springframework.boot.ApplicationRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import tools.jackson.databind.json.JsonMapper;
@@ -84,4 +86,14 @@ class RabbitMQConfig {
     public JacksonJsonMessageConverter jacksonConverter(JsonMapper mapper) {
         return new JacksonJsonMessageConverter(mapper);
     }
+//
+//    @Bean
+//    RabbitAdmin rabbitAdmin(ConnectionFactory connectionFactory) {
+//        return new RabbitAdmin(connectionFactory);
+//    }
+//
+//    @Bean
+//    ApplicationRunner rabbitInitializer(RabbitAdmin rabbitAdmin) {
+//        return args -> rabbitAdmin.initialize();
+//    }
 }

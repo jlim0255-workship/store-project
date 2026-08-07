@@ -17,7 +17,6 @@ public class OrderService {
 
     private final OrderRepository orderRepository;
     private final OrderValidator orderValidator;
-
     private final OrderEventService orderEventService;
 
     OrderService(OrderRepository orderRepository, OrderValidator orderValidator, OrderEventService orderEventService) {
@@ -32,6 +31,8 @@ public class OrderService {
         newOrder.setUserName(userName);
         OrderEntity savedOrder = this.orderRepository.save(newOrder);
         log.info("Created Order with orderNumber={}", savedOrder.getOrderNumber());
+
+        // save order created event
         OrderCreatedEvent orderCreatedEvent = OrderEventMapper.buildOrderCreatedEvent(savedOrder);
         orderEventService.save(orderCreatedEvent);
         return new CreateOrderResponse(savedOrder.getOrderNumber());
@@ -55,6 +56,7 @@ public class OrderService {
         }
     }
 
+    // MEAT: this is not how the real world application works, just a simulation here
     private void process(OrderEntity order) {
         try {
             if (canBeDelivered(order)) {
@@ -76,6 +78,7 @@ public class OrderService {
     }
 
     private boolean canBeDelivered(OrderEntity order) {
+        // check if teh order address country is inside the allowed delivery list or not
         return DELIVERY_ALLOWED_COUNTRIES.contains(
                 order.getDeliveryAddress().country().toUpperCase());
     }
