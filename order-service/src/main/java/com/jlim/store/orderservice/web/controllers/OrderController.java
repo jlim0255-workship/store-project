@@ -54,19 +54,19 @@ class OrderController {
         return orderService.createOrder(userName, request);
     }
 
-//    @GetMapping
-//    List<OrderSummary> getOrders() {
-//        String userName = securityService.getLoginUserName();
-//        log.info("Fetching orders for user: {}", userName);
-//        return orderService.findOrders(userName);
-//    }
-//
-//    @GetMapping(value = "/{orderNumber}")
-//    OrderDTO getOrder(@PathVariable(value = "orderNumber") String orderNumber) {
-//        log.info("Fetching order by id: {}", orderNumber);
-//        String userName = securityService.getLoginUserName();
-//        return orderService
-//                .findUserOrder(userName, orderNumber)
-//                .orElseThrow(() -> new OrderNotFoundException(orderNumber));
-//    }
+    @GetMapping
+    List<OrderSummary> getOrders() {
+        String userName = securityService.getLoginUserName();
+        log.info("Fetching orders for user: {}", userName);
+        return orderService.findOrders(userName);
+    }
+
+    @GetMapping(value = "/{orderNumber}")
+    OrderDTO getOrder(@PathVariable(value = "orderNumber") String orderNumber) {
+        log.info("Fetching order by id: {}", orderNumber);
+        String userName = securityService.getLoginUserName();
+        return orderService
+                .findUserOrder(userName, orderNumber)
+                .orElseThrow(() -> new OrderNotFoundException(orderNumber));
+    }
 }
