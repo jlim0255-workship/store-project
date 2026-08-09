@@ -80,14 +80,4 @@ class RabbitMQConfig {
     public JacksonJsonMessageConverter jacksonConverter(JsonMapper mapper) {
         return new JacksonJsonMessageConverter(mapper);
     }
-//
-//    @Bean
-//    RabbitAdmin rabbitAdmin(ConnectionFactory connectionFactory) {
-//        return new RabbitAdmin(connectionFactory);
-//    }
-//
-//    @Bean
-//    ApplicationRunner rabbitInitializer(RabbitAdmin rabbitAdmin) {
-//        return args -> rabbitAdmin.initialize();
-//    }
 }
