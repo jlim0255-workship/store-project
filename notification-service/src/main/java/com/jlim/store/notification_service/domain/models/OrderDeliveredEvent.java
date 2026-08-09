@@ -1,7 +1,5 @@
 package com.jlim.store.notification_service.domain.models;
 
-import com.jlim.store.orderservice.domain.models.OrderItem;
-
 import java.time.LocalDateTime;
 import java.util.Set;
 
