@@ -1,4 +1,4 @@
-create sequence order_events_id_seq start with 1 increment by 50;
+create sequence order_event_id_seq start with 1 increment by 50;
 
 create table order_events (
     id bigint default nextval('order_event_id_seq') not null,
