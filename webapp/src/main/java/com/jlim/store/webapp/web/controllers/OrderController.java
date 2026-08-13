@@ -1,5 +1,6 @@
 package com.jlim.store.webapp.web.controllers;
 
+import com.jlim.store.webapp.web.clients.orders.*;
 import jakarta.validation.Valid;
 import java.util.List;
 import java.util.Map;
@@ -17,10 +18,21 @@ import org.springframework.web.bind.annotation.ResponseBody;
 class OrderController {
     private static final Logger log = LoggerFactory.getLogger(OrderController.class);
 
+    private final OrderServiceClient orderServiceClient;
+
+    OrderController(OrderServiceClient orderServiceClient){
+        this.orderServiceClient = orderServiceClient;
+    }
 
     @GetMapping("/cart")
     String cart() {
         return "cart";
+    }
+
+    @PostMapping("/api/orders")
+    @ResponseBody
+    OrderConfirmationDTO createOrder(@Valid @RequestBody CreateOrderRequest orderRequest){
+        return orderServiceClient.createOrder(orderRequest);
     }
 
     @GetMapping("/orders/{orderNumber}")
@@ -29,8 +41,20 @@ class OrderController {
         return "order_details";
     }
 
+    @GetMapping("/api/orders/{orderNumber}")
+    @ResponseBody
+    OrderDTO getOrder(@PathVariable String orderNumber){
+        return orderServiceClient.getOrder(orderNumber);
+    }
+
     @GetMapping("/orders")
     String showOrders() {
         return "orders";
+    }
+
+    @GetMapping("/api/orders")
+    @ResponseBody
+    List<OrderSummary> getOrders(){
+        return orderServiceClient.getOrders();
     }
 }
