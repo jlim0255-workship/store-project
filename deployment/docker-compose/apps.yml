@@ -92,3 +92,17 @@ services:
       resources:
         limits:
           memory: 700m
+
+  webapp:
+    image: jlim0255.work/store-project-webapp
+    container_name: webapp
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+      - STORE_API_GATEWAY_URL=http://api-gateway:8989
+    ports:
+      - "8080:8080"
+    restart: unless-stopped
+    deploy:
+      resources:
+        limits:
+          memory: 700m
