@@ -12,7 +12,7 @@ document.addEventListener('alpine:init', () => {
         },
         getOrderDetails(orderNumber) {
             console.log(apiGatewayUrl)
-            $.getJSON(apiGatewayUrl + "/orders/api/orders/"+ orderNumber, (data) => {
+            $.getJSON("/api/orders/"+ orderNumber, (data) => {
                 //console.log("Get Order Resp:", data)
                 this.orderDetails = data
             });

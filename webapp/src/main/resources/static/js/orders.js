@@ -7,7 +7,7 @@ document.addEventListener('alpine:init', () => {
         },
         loadOrders() {
             console.log(apiGatewayUrl)
-            $.getJSON(apiGatewayUrl + "/orders/api/orders", (data) => {
+            $.getJSON("/api/orders", (data) => {
                 //console.log("orders :", data)
                 this.orders = data
             });
