@@ -3,7 +3,6 @@ package com.jlim.store.webapp.web.controllers;
 import com.jlim.store.webapp.web.clients.orders.*;
 import jakarta.validation.Valid;
 import java.util.List;
-import java.util.Map;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -20,7 +19,7 @@ class OrderController {
 
     private final OrderServiceClient orderServiceClient;
 
-    OrderController(OrderServiceClient orderServiceClient){
+    OrderController(OrderServiceClient orderServiceClient) {
         this.orderServiceClient = orderServiceClient;
     }
 
@@ -31,7 +30,7 @@ class OrderController {
 
     @PostMapping("/api/orders")
     @ResponseBody
-    OrderConfirmationDTO createOrder(@Valid @RequestBody CreateOrderRequest orderRequest){
+    OrderConfirmationDTO createOrder(@Valid @RequestBody CreateOrderRequest orderRequest) {
         return orderServiceClient.createOrder(orderRequest);
     }
 
@@ -43,7 +42,7 @@ class OrderController {
 
     @GetMapping("/api/orders/{orderNumber}")
     @ResponseBody
-    OrderDTO getOrder(@PathVariable String orderNumber){
+    OrderDTO getOrder(@PathVariable String orderNumber) {
         return orderServiceClient.getOrder(orderNumber);
     }
 
@@ -54,7 +53,7 @@ class OrderController {
 
     @GetMapping("/api/orders")
     @ResponseBody
-    List<OrderSummary> getOrders(){
+    List<OrderSummary> getOrders() {
         return orderServiceClient.getOrders();
     }
 }

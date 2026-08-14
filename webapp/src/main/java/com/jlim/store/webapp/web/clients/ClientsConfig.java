@@ -1,10 +1,9 @@
 package com.jlim.store.webapp.web.clients;
 
-import java.time.Duration;
-
 import com.jlim.store.webapp.ApplicationProperties;
 import com.jlim.store.webapp.web.clients.catalog.CatalogServiceClient;
 import com.jlim.store.webapp.web.clients.orders.OrderServiceClient;
+import java.time.Duration;
 import org.springframework.boot.http.client.ClientHttpRequestFactoryBuilder;
 import org.springframework.boot.restclient.RestClientCustomizer;
 import org.springframework.context.annotation.Bean;
