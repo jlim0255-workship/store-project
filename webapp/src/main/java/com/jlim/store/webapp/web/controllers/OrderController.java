@@ -5,7 +5,6 @@ import com.jlim.store.webapp.web.clients.orders.*;
 import jakarta.validation.Valid;
 import java.util.List;
 import java.util.Map;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -63,6 +62,8 @@ class OrderController {
     @GetMapping("/api/orders")
     @ResponseBody
     List<OrderSummary> getOrders() {
-        return orderServiceClient.getOrders();
+        String accessToken = securityHelper.getAccessToken();
+        Map<String, ?> headers = Map.of("Authorization", "Bearer " + accessToken);
+        return orderServiceClient.getOrders(headers);
     }
 }
