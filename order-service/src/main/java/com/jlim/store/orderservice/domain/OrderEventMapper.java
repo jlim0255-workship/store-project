@@ -1,7 +1,6 @@
 package com.jlim.store.orderservice.domain;
 
 import com.jlim.store.orderservice.domain.models.*;
-
 import java.time.LocalDateTime;
 import java.util.Set;
 import java.util.UUID;

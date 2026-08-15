@@ -1,8 +1,7 @@
 package com.jlim.store.orderservice.domain;
 
-import java.util.List;
-
 import com.jlim.store.orderservice.domain.models.*;
+import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Sort;

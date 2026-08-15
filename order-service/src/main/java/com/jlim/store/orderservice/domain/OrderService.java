@@ -1,9 +1,8 @@
 package com.jlim.store.orderservice.domain;
 
+import com.jlim.store.orderservice.domain.models.*;
 import java.util.List;
 import java.util.Optional;
-
-import com.jlim.store.orderservice.domain.models.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;

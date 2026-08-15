@@ -20,4 +20,3 @@ class WebMvcConfig implements WebMvcConfigurer {
                 .allowCredentials(false);
     }
 }
-

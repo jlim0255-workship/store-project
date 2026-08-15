@@ -1,8 +1,7 @@
 package com.jlim.store.orderservice.jobs;
 
-import java.time.Instant;
-
 import com.jlim.store.orderservice.domain.OrderEventService;
+import java.time.Instant;
 import net.javacrumbs.shedlock.core.LockAssert;
 import net.javacrumbs.shedlock.spring.annotation.SchedulerLock;
 import org.slf4j.Logger;
@@ -16,13 +15,13 @@ public class OrderEventsPublishingJob {
 
     private final OrderEventService orderEventService;
 
-    OrderEventsPublishingJob(OrderEventService orderEventService){
+    OrderEventsPublishingJob(OrderEventService orderEventService) {
         this.orderEventService = orderEventService;
     }
 
     @Scheduled(cron = "${orders.publish.order-events-job-cron}")
     @SchedulerLock(name = "publishOrderEvents")
-    public void publishOrderEvents(){
+    public void publishOrderEvents() {
         LockAssert.assertLocked();
         log.info("Publishing Order Events at {}", Instant.now());
         orderEventService.publishOrderEvents();

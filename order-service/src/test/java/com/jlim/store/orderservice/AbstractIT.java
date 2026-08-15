@@ -1,7 +1,10 @@
 package com.jlim.store.orderservice;
 
+import static com.github.tomakehurst.wiremock.client.WireMock.*;
+
 import com.github.tomakehurst.wiremock.client.WireMock;
 import io.restassured.RestAssured;
+import java.math.BigDecimal;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -12,10 +15,6 @@ import org.springframework.test.context.DynamicPropertyRegistry;
 import org.springframework.test.context.DynamicPropertySource;
 import org.wiremock.integrations.testcontainers.WireMockContainer;
 
-import java.math.BigDecimal;
-
-import static com.github.tomakehurst.wiremock.client.WireMock.*;
-
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @Import(TestcontainersConfiguration.class)
 public abstract class AbstractIT {
@@ -25,20 +24,21 @@ public abstract class AbstractIT {
     static WireMockContainer wireMockServer = new WireMockContainer("wiremock/wiremock:3.5.2-alpine");
 
     @BeforeAll
-    static void beforeAll(){
+    static void beforeAll() {
         wireMockServer.start();
         configureFor(wireMockServer.getHost(), wireMockServer.getPort());
     }
 
     // MEAT: override the port for the catalog service to point to the wiremock server when we are wire mocking
     @DynamicPropertySource
-    static void configureProperties(DynamicPropertyRegistry registry){
+    static void configureProperties(DynamicPropertyRegistry registry) {
         registry.add("orders.catalog-service-url", wireMockServer::getBaseUrl);
     }
 
     @BeforeEach
-    void setUp(){RestAssured.port = port;}
-
+    void setUp() {
+        RestAssured.port = port;
+    }
 
     // whenever the GET path is matching "/api/products/code",
     // return this {"code": "code", "name": "name", "price": price} as the response body
@@ -55,5 +55,4 @@ public abstract class AbstractIT {
                     }
                 """.formatted(code, name, price.doubleValue()))));
     }
-
 }

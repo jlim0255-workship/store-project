@@ -1,6 +1,5 @@
 package com.jlim.store.orderservice.domain;
 
-
 import com.jlim.store.orderservice.ApplicationProperties;
 import com.jlim.store.orderservice.domain.models.OrderCancelledEvent;
 import com.jlim.store.orderservice.domain.models.OrderCreatedEvent;

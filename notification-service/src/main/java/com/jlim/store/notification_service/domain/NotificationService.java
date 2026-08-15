@@ -105,5 +105,4 @@ public class NotificationService {
             throw new RuntimeException("Error while sending email", e);
         }
     }
-
 }

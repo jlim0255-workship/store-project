@@ -1,17 +1,15 @@
 package com.jlim.store.orderservice.testdata;
 
+import static org.instancio.Select.field;
+
 import com.jlim.store.orderservice.domain.models.Address;
 import com.jlim.store.orderservice.domain.models.CreateOrderRequest;
 import com.jlim.store.orderservice.domain.models.Customer;
 import com.jlim.store.orderservice.domain.models.OrderItem;
-
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.Set;
 import org.instancio.Instancio;
-
-import static org.instancio.Select.field;
-
 
 public class TestDataFactory {
     static final List<String> VALID_COUNTIES = List.of("India", "Germany");
@@ -31,7 +29,10 @@ public class TestDataFactory {
     public static CreateOrderRequest createOrderRequestWithInvalidCustomer() {
         return Instancio.of(CreateOrderRequest.class)
                 .generate(field(Customer::email), gen -> gen.text().pattern("#c#c#c#c#d#d@mail.com"))
-                .set(field(Customer::phone), "") //MEAT: intentionally set the customer phone field to empty, SO THE WHOLE REQUEST IS INVALID
+                .set(
+                        field(Customer::phone),
+                        "") // MEAT: intentionally set the customer phone field to empty, SO THE WHOLE REQUEST IS
+                // INVALID
                 .generate(field(Address::country), gen -> gen.oneOf(VALID_COUNTIES))
                 .set(field(CreateOrderRequest::items), VALID_ORDER_ITEMS)
                 .create();

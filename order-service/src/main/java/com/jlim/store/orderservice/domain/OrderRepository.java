@@ -1,10 +1,9 @@
 package com.jlim.store.orderservice.domain;
 
-import java.util.List;
-import java.util.Optional;
-
 import com.jlim.store.orderservice.domain.models.OrderStatus;
 import com.jlim.store.orderservice.domain.models.OrderSummary;
+import java.util.List;
+import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 

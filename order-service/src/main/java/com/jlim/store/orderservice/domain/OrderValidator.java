@@ -1,11 +1,10 @@
 package com.jlim.store.orderservice.domain;
 
-import java.util.Set;
-
 import com.jlim.store.orderservice.clients.catalog.Product;
 import com.jlim.store.orderservice.clients.catalog.ProductServiceClient;
 import com.jlim.store.orderservice.domain.models.CreateOrderRequest;
 import com.jlim.store.orderservice.domain.models.OrderItem;
+import java.util.Set;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;

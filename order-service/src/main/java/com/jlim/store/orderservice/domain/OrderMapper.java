@@ -1,11 +1,9 @@
 package com.jlim.store.orderservice.domain;
 
-
 import com.jlim.store.orderservice.domain.models.CreateOrderRequest;
 import com.jlim.store.orderservice.domain.models.OrderDTO;
 import com.jlim.store.orderservice.domain.models.OrderItem;
 import com.jlim.store.orderservice.domain.models.OrderStatus;
-
 import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;

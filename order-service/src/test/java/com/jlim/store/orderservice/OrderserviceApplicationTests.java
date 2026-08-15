@@ -4,8 +4,6 @@ import org.junit.jupiter.api.Test;
 
 class OrderserviceApplicationTests extends AbstractIT {
 
-	@Test
-	void contextLoads() {
-	}
-
+    @Test
+    void contextLoads() {}
 }

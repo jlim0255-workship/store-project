@@ -27,13 +27,12 @@ public class OrderEventEntity {
     /**
      * No Args Constructor
      * */
-    public OrderEventEntity(){
-    }
+    public OrderEventEntity() {}
 
     /**
      * All Args Constructor
      * */
-    public OrderEventEntity(String eventId){
+    public OrderEventEntity(String eventId) {
         this.eventId = eventId;
     }
 
@@ -69,8 +68,4 @@ public class OrderEventEntity {
     public void setUpdatedAt(LocalDateTime updatedAt) {
         this.updatedAt = updatedAt;
     }
-
-
-
-
 }

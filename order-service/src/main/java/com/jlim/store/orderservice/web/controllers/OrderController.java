@@ -25,8 +25,6 @@ import org.springframework.web.bind.annotation.RestController;
  * Controller should be thin, accept request, call service to process, return response
  *
  * */
-
-
 @RestController
 @RequestMapping("/api/orders")
 @SecurityRequirement(name = "security_auth")
