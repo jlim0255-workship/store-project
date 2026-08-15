@@ -4,10 +4,15 @@ services:
     image: jlim0255.work/store-project-catalog-service
     container_name: catalog-service
     environment:
+      - BPL_JVM_THREAD_COUNT=50
       - SPRING_PROFILES_ACTIVE=docker
       - DB_URL=jdbc:postgresql://catalog-db:5432/postgres
       - DB_USERNAME=postgres
       - DB_PASSWORD=postgres
+      - SWAGGER_API_GATEWAY_URL=http://api-gateway:8989/catalog
+      - MANAGEMENT_TRACING_EXPORT_ENABLED=${MANAGEMENT_TRACING_EXPORT_ENABLED:-true}
+#      - OTLP_ENDPOINT=http://tempo:4318/v1/traces
+      - MANAGEMENT_TRACING_EXPORT_ZIPKIN_ENDPOINT=http://tempo:9411/api/v2/spans
     ports:
       - "8081:8081"
     restart: unless-stopped
@@ -17,12 +22,15 @@ services:
     deploy:
       resources:
         limits:
-          memory: 700m
+          memory: 1024m
+    labels:
+      logging: "promtail"
 
   order-service:
     image: jlim0255.work/store-project-order-service
     container_name: order-service
     environment:
+      - BPL_JVM_THREAD_COUNT=50
       - SPRING_PROFILES_ACTIVE=docker
       - ORDERS_CATALOG_SERVICE_URL=http://api-gateway:8989/catalog
       - DB_URL=jdbc:postgresql://orders-db:5432/postgres
@@ -33,6 +41,10 @@ services:
       - RABBITMQ_USERNAME=guest
       - RABBITMQ_PASSWORD=guest
       - OAUTH2_SERVER_URL=http://keycloak:9191
+      - SWAGGER_API_GATEWAY_URL=http://api-gateway:8989/orders
+      - MANAGEMENT_TRACING_EXPORT_ENABLED=${MANAGEMENT_TRACING_EXPORT_ENABLED:-true}
+#      - OTLP_ENDPOINT=http://tempo:4318/v1/traces
+      - MANAGEMENT_TRACING_EXPORT_ZIPKIN_ENDPOINT=http://tempo:9411/api/v2/spans
     ports:
       - "8082:8082"
     restart: unless-stopped
@@ -44,7 +56,7 @@ services:
     deploy:
       resources:
         limits:
-          memory: 700m
+          memory: 1024m
     labels:
       logging: "promtail"
 
@@ -52,6 +64,7 @@ services:
     image: jlim0255.work/store-project-notification-service
     container_name: notification-service
     environment:
+      - BPL_JVM_THREAD_COUNT=50
       - SPRING_PROFILES_ACTIVE=docker
       - DB_URL=jdbc:postgresql://notifications-db:5432/postgres
       - DB_USERNAME=postgres
@@ -62,6 +75,9 @@ services:
       - RABBITMQ_PASSWORD=guest
       - MAIL_HOST=mailhog
       - MAIL_PORT=1025
+      - MANAGEMENT_TRACING_EXPORT_ENABLED=${MANAGEMENT_TRACING_EXPORT_ENABLED:-true}
+#      - OTLP_ENDPOINT=http://tempo:4318/v1/traces
+      - MANAGEMENT_TRACING_EXPORT_ZIPKIN_ENDPOINT=http://tempo:9411/api/v2/spans
     ports:
       - "8083:8083"
     restart: unless-stopped
@@ -75,7 +91,7 @@ services:
     deploy:
       resources:
         limits:
-          memory: 700m
+          memory: 1024m
     labels:
       logging: "promtail"
 
@@ -83,28 +99,40 @@ services:
     image: jlim0255.work/store-project-api-gateway
     container_name: api-gateway
     environment:
+      - BPL_JVM_THREAD_COUNT=50
       - SPRING_PROFILES_ACTIVE=docker
       - CATALOG_SERVICE_URL=http://catalog-service:8081
       - ORDER_SERVICE_URL=http://order-service:8082
+      - MANAGEMENT_TRACING_EXPORT_ENABLED=${MANAGEMENT_TRACING_EXPORT_ENABLED:-true}
+#      - OTLP_ENDPOINT=http://tempo:4318/v1/traces
+      - MANAGEMENT_TRACING_EXPORT_ZIPKIN_ENDPOINT=http://tempo:9411/api/v2/spans
     ports:
       - "8989:8989"
     restart: unless-stopped
     deploy:
       resources:
         limits:
-          memory: 700m
+          memory: 1024m
+    labels:
+      logging: "promtail"
 
   webapp:
     image: jlim0255.work/store-project-webapp
     container_name: webapp
     environment:
+      - BPL_JVM_THREAD_COUNT=50
       - SPRING_PROFILES_ACTIVE=docker
       - STORE_API_GATEWAY_URL=http://api-gateway:8989
       - OAUTH2_SERVER_URL=http://keycloak:9191
+      - MANAGEMENT_TRACING_EXPORT_ENABLED=${MANAGEMENT_TRACING_EXPORT_ENABLED:-true}
+#      - OTLP_ENDPOINT=http://tempo:4318/v1/traces
+      - MANAGEMENT_TRACING_EXPORT_ZIPKIN_ENDPOINT=http://tempo:9411/api/v2/spans
     ports:
       - "8080:8080"
     restart: unless-stopped
     deploy:
       resources:
         limits:
-          memory: 700m
+          memory: 1024m
+    labels:
+      logging: "promtail"
