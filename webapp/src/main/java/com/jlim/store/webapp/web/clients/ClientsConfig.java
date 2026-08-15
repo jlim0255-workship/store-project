@@ -25,7 +25,7 @@ class ClientsConfig {
         var requestFactory = ClientHttpRequestFactoryBuilder.simple()
                 .withCustomizer(c -> {
                     c.setConnectTimeout(Duration.ofSeconds(5));
-                    c.setReadTimeout(Duration.ofSeconds(5));
+                    c.setReadTimeout(Duration.ofSeconds(15));
                 })
                 .build();
         return restClientBuilder ->
@@ -34,7 +34,7 @@ class ClientsConfig {
 
     @Bean
     CatalogServiceClient catalogServiceClient(RestClient.Builder builder) {
-        RestClient restClient = builder.build();
+        RestClient restClient = builder.baseUrl(properties.apiGatewayUrl()).build();
         HttpServiceProxyFactory factory = HttpServiceProxyFactory.builderFor(RestClientAdapter.create(restClient))
                 .build();
         return factory.createClient(CatalogServiceClient.class);
@@ -42,7 +42,7 @@ class ClientsConfig {
 
     @Bean
     OrderServiceClient orderServiceClient(RestClient.Builder builder) {
-        RestClient restClient = builder.build();
+        RestClient restClient = builder.baseUrl(properties.apiGatewayUrl()).build();
         HttpServiceProxyFactory factory = HttpServiceProxyFactory.builderFor(RestClientAdapter.create(restClient))
                 .build();
         return factory.createClient(OrderServiceClient.class);
