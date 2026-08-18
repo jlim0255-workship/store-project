@@ -35,9 +35,30 @@ class OrderEntity {
     @Column(name = "username", nullable = false)
     private String userName;
 
+    /**
+     * @OneToMany: Parent and Children
+     * One OrderEntity can link to many OrderItemEntites
+     *
+     * CascadeType.ALL: When we save an OrderEntity, it will also save all the OrderItemEntities associated with it.
+     * When we delete an OrderEntity, it will also delete all the OrderItemEntities associated with it.
+     *
+     * mappedBy = "order": items field in OrderEntity keep tracks of many order field in OrderItemEntity
+     * (There should be many to one at the order field inside OrderItemEntity)
+     * */
+
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "order")
     private Set<OrderItemEntity> items;
 
+    /**
+     * @Embedded and @AttributeOverrides often work together
+     *
+     * @Embedded indicates that the fields of the embedded object should be mapped to columns in the owning entity's table.
+     * (embed these fields into higher helper customer and address class, instead of cramming all fields into OrderEntity)
+     *
+     * @AttributeOverrides rename database column for the embedded objects (rename from name to customer_name in customer helper class)
+     * (to avoid clashing with OrderEntity)
+     *
+     * */
     @Embedded
     @AttributeOverrides(
             value = {

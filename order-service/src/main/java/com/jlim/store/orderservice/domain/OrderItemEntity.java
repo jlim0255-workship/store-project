@@ -31,9 +31,24 @@ class OrderItemEntity {
     @Column(nullable = false)
     private Integer quantity;
 
+    /**
+     * MEAT:
+     *
+     * @ManyToOne: Many OrderItemEntity can link to one OrderEntity
+     * (There should be one to many at the items field inside OrderEntity)
+     *
+     * DB LEVEL:
+     * @JoinColumn(name = "order_id"): foreign key representation,
+     * order_items table references order table through newly created order_id column based on the PrimaryKey of OrderEntity, which is id (in Orders table)
+     *
+     * JAVA Object LEVEL:
+     * A newly created field order type = OrderEntity is referencing the id (PK) inside OrderEntity
+     *
+     * */
+
     @ManyToOne(optional = false)
-    @JoinColumn(name = "order_id")
-    private OrderEntity order;
+    @JoinColumn(name = "order_id") // DB level referencing field is called order_id in Postgres
+    private OrderEntity order; // Java Object level referencing field is called order type = OrderEntity
 
     public Long getId() {
         return id;
