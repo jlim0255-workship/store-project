@@ -27,8 +27,10 @@ class ProductEntity {
     @NotNull(message = "Product price is required") @DecimalMin("0.1") @Column(nullable = false)
     private BigDecimal price;
 
+    // No Args Constructor: for Jpa to pull data from db and set the properties on it
     public ProductEntity() {}
 
+    // All Args Constructor
     public ProductEntity(Long id, String code, String name, String description, String imageUrl, BigDecimal price) {
         this.id = id;
         this.code = code;

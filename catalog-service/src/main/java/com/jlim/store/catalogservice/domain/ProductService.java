@@ -30,6 +30,9 @@ public class ProductService {
         // cast it to 0, ensure no negative faulty value
         pageNo = pageNo <= 1 ? 0 : pageNo - 1;
 
+        // abstraction of page
+        // how to limit the db query? (min 1 max 10 from applicationProperties
+        // go to pageNo (current page), grab applicationProperites.pageSize() items per page (num items to show), sort by (sort)
         Pageable pageable = PageRequest.of(pageNo, applicationProperties.pageSize(), sort);
 
         // convert the ProductEntity to Product type
