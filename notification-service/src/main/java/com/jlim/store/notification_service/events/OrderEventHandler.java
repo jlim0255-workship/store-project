@@ -14,6 +14,18 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class OrderEventHandler {
+    /*
+    * The implementation follows Idempotency checking:
+    * if (orderEventRepository.existsByEventId(event.eventId())) {
+            log.warn("Received duplicate OrderCreatedEvent with eventId: {}", event.eventId());
+            return;
+        }
+    *
+    *
+    * In distributed networks, RabbitMQ might occasionally deliver the same message twice.
+    * Checking the database (orderEventRepository) before sending a notification ensures
+    * customers never receive duplicate emails or SMS alerts.
+     * */
     private static final Logger log = LoggerFactory.getLogger(OrderEventHandler.class);
     // MEAT: no DTO, or map entity to DTO, we are not publishing the response to web
 
