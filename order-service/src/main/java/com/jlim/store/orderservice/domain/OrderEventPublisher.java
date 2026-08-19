@@ -18,6 +18,10 @@ class OrderEventPublisher {
         this.properties = properties;
     }
 
+    /*
+    * Publish respective events to respective exchange
+    * */
+
     public void publish(OrderCreatedEvent event) {
         this.send(properties.newOrdersQueue(), event);
     }

@@ -70,6 +70,9 @@ public class OrderEventService {
         Sort sort = Sort.by("createdAt").ascending();
         List<OrderEventEntity> events = orderEventRepository.findAll(sort);
         log.info("Found {} Order Events to be published", events.size());
+        /*
+         * MEAT: delete the order event after we published it
+         * */
         for (OrderEventEntity event : events) {
             this.publishEvent(event);
             orderEventRepository.delete(event);

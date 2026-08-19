@@ -47,6 +47,10 @@ public class OrderService {
                 .map(OrderMapper::convertToDTO);
     }
 
+    /*
+    * Convert the status from New to others
+    * */
+
     public void processNewOrders() {
         List<OrderEntity> orders = orderRepository.findByStatus(OrderStatus.NEW);
         log.info("Found {} new orders to process", orders.size());
