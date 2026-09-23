@@ -7,7 +7,7 @@ This project demonstrates how to build a scalable and maintainable e-commerce ap
 System Architecture Diagram
 ![Store project system diagram generated with gitdiagram](pic/store-project-diagram.png)
 
-![Store project system diagram generated with gitdiagram](pic/Screenshot 2026-09-23 134427.png)
+![alternative diagram](pic/alternative-diagram.png)
 
 Modules
 - catalog-service: This service provides REST API for managing catalog of products.
